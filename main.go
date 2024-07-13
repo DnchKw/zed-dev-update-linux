@@ -1,11 +1,11 @@
 package main
 
 import (
+	"encoding/json"
 	"fmt"
 	"io"
 	"net/http"
 	"os/exec"
-	"strings"
 )
 
 var availableVersion string = ""
@@ -44,9 +44,24 @@ func getActualVersion() {
 	}
 	defer resp.Body.Close()
 	body, err := io.ReadAll(resp.Body)
-	i := strings.Index(string(body), "v0")
+	// i := strings.Index(string(body), "tag_name")
+	rm := make(map[string]json.RawMessage)
 
-	targetVersion = getVersionFromString(string(body), i+1)
+	err = json.Unmarshal(body, &rm)
+
+	if err != nil {
+		panic(err)
+	}
+
+	ver := ""
+
+	for key, value := range rm {
+		if key == "tag_name" {
+			ver = string(value)
+		}
+	}
+
+	targetVersion = getVersionFromString(ver, 2)
 
 }
 
