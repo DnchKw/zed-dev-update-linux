@@ -53,15 +53,7 @@ func getActualVersion() {
 		panic(err)
 	}
 
-	ver := ""
-
-	for key, value := range rm {
-		if key == "tag_name" {
-			ver = string(value)
-		}
-	}
-
-	targetVersion = getVersionFromString(ver, 2)
+	targetVersion = getVersionFromString(string(rm["tag_name"]), 2)
 
 }
 
