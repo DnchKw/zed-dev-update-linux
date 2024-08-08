@@ -7,3 +7,5 @@ A program to automating updates the Zed editor development version on Linux
 ## USING
 - Run `./main` in source directory
 - Add `main` file in crontab
+## ATENTION
+Zed already has auto-update. This is just a learning project
